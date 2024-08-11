@@ -18,17 +18,6 @@ services:
         - DATABASE_URL=postgres://tunwa:password@db:5432/api?sslmode=disable
       depends_on:
         - postgres
-  # api:
-  #   build: ./
-  #   ports:
-  #     - "127.0.0.1:3001:3000"
-  #   environment:
-  #     - DB_HOST=postgres
-  #     - DB_USER=tunwa
-  #     - DB_PASSWORD=password
-  #     - DB_NAME=api
-  #   depends_on:
-  #     - postgres
 
   postgres:
     image: postgres:latest
