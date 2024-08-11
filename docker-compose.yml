@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./nginx:/etc/nginx/
+    depends_on:
+      - api
+
+  api:
+      build: ./
+      ports:
+        - "3001:3000"
+      environment:
+        - DATABASE_URL=postgres://tunwa:password@db:5432/api?sslmode=disable
+      depends_on:
+        - postgres
+  # api:
+  #   build: ./
+  #   ports:
+  #     - "127.0.0.1:3001:3000"
+  #   environment:
+  #     - DB_HOST=postgres
+  #     - DB_USER=tunwa
+  #     - DB_PASSWORD=password
+  #     - DB_NAME=api
+  #   depends_on:
+  #     - postgres
+
+  postgres:
+    image: postgres:latest
+    ports:
+    - "5432:5432"
+    environment:
+      POSTGRES_USER: tunwa
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: api
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
